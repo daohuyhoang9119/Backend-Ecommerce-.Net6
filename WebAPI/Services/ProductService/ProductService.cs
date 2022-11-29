@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Dtos.Product;
 
 namespace WebAPI.Services.ProductService
 {
@@ -14,20 +15,24 @@ namespace WebAPI.Services.ProductService
             new Product { Id = 3, Title = "Nokia"},
             new Product { Id = 4, Title = "Gg Pixel"},
         };
-        public List<Product> AddProduct(Product newProduct)
+        public async Task<ServiceResponse<List<GetProductDto>>> AddProduct(AddProductDto newProduct)
         {
+            var serviceRespone = new ServiceResponse<List<GetProductDto>>();
             products.Add(newProduct);
-            return products;
+            serviceRespone.Data = products;
+            return serviceRespone;
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<ServiceResponse<List<GetProductDto>>> GetAllProducts()
         {
-            return products;
+            return new ServiceResponse<List<GetProductDto>> {Data = products};
         }
 
-        public Product GetSingleProductById(int id)
-        {
-            return products.FirstOrDefault(c => c.Id == id);
+        public async Task<ServiceResponse<Product>> GetSingleProductById(int id) {
+            var serviceRespone = new ServiceResponse<GetProductDto>();
+            var product = products.FirstOrDefault(c => c.Id == id);
+            serviceRespone.Data = product;
+            return serviceRespone;
         }
     }
 }

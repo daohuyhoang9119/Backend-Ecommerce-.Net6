@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Dtos.Product;
 using WebAPI.Services.ProductService;
 
 namespace WebAPI.Controllers
@@ -19,18 +20,18 @@ namespace WebAPI.Controllers
         //Get List products
         [HttpGet("list")]
      
-        public ActionResult<List<Product>> GetAllProduct(){
-            return Ok(_productService.GetAllProducts());
+        public async Task<ActionResult<ServiceResponse<List<GetProductDto>>>> GetAllProduct(){
+            return Ok(await _productService.GetAllProducts());
         }
         //Get Single product
         [HttpGet("{id}")]
-        public ActionResult<Product> GetSingleProductById(int id){
-            return Ok(_productService.GetSingleProductById(id));
+        public async  Task<ActionResult<ServiceResponse<GetProductDto>>> GetSingleProductById(int id){
+            return Ok(await _productService.GetSingleProductById(id));
         }
 
         [HttpPost]
-        public ActionResult<List<Product>> AddProduct(Product newProduct){
-            return Ok(_productService.AddProduct(newProduct));
+        public async Task<ActionResult<ServiceResponse<List<GetProductDto>>>> AddProduct(AddProductDto newProduct){
+            return Ok(await _productService.AddProduct(newProduct));
         }
     }
 }
